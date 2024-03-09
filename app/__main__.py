@@ -7,7 +7,7 @@ import time
 import typer
 from nxtools import logging
 
-from app import TemplateBuilder
+from app.builder import TemplateBuilder
 
 logging.show_time = True
 app = typer.Typer(add_completion=False)
