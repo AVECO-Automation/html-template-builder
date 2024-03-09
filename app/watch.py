@@ -6,11 +6,11 @@ when a source file changes.
 
 import time
 
-from nxtools import logging, log_traceback
+from nxtools import log_traceback, logging
 from watchdog.observers import Observer
 
 
-class WatchHandler():
+class WatchHandler:
     """Watch event handler."""
 
     def __init__(self, callback):
@@ -33,7 +33,7 @@ class WatchHandler():
             self.queue = set()
 
 
-class Watch():
+class Watch:
     """Directory watcher."""
 
     def __init__(self, path, callback):
@@ -52,7 +52,7 @@ class Watch():
 
         try:
             while self.should_run:
-                time.sleep(.01)
+                time.sleep(0.01)
                 self.handler.process()
         except Exception:
             log_traceback()

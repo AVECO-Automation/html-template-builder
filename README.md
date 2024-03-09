@@ -2,9 +2,9 @@ HTML Template builder
 =====================
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/aveco-automation/html-template-builder?style=for-the-badge)
-![Maintenance](https://img.shields.io/maintenance/yes/2021?style=for-the-badge)
+![Maintenance](https://img.shields.io/maintenance/yes/2024?style=for-the-badge)
 ![Last commit](https://img.shields.io/github/last-commit/aveco-automation/html-template-builder?style=for-the-badge)
-![Python version](https://img.shields.io/badge/python-3.6-blue?style=for-the-badge)
+![Python version](https://img.shields.io/badge/python-3.10-blue?style=for-the-badge)
 
 Template builder is a simple tool that assembles HTML snippet, SASS stylesheet, and JavaScript file
 into a graphic template for CasparCG, or another HTML-enabled playout server.

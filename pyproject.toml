@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "html-template-builder"
+version = "2.0.0"
+description = ""
+authors = ["Martastain <martas@imm.cz>"]
+readme = "README.md"
+packages = [
+    { include = "app" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+nxtools = "^1.6"
+htmlmin = "^0.1.12"
+jsmin = "^3.0.1"
+jinja2 = "^3.1.3"
+libsass = "^0.23.0"
+typer = "^0.9.0"
+watchdog = "^4.0.0"
+
+[tool.poetry.dev-dependencies]
+mypy = "^1.8"
+ruff = "^0.3.1"
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.format]
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "W",     # pycodestyle warnings
+    "F",     # pyflakes
+    "I",     # isort
+    "C4",    # flake8-comprehensions
+    "B",     # flake8-bugbear
+    "ISC",   # flake8-implicit-str-concat
+    "C4",    # flake8-comprehensions
+    "UP",    # pyupgrade
+    "ASYNC", # flake8-async
+    "SIM",   # flake8-simplify
+    "ISC",   # flake8-implicit-str-concat
+]
+
+ignore = [
+    "ISC001",
+    "B008",    # do not perform function calls in argument defaults
+    "C901",    # too complex. C'mon - this is a complex project
+    "ANN101",  # missing type annotation for self
+    "ANN102",  # missing type annotation for cls
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

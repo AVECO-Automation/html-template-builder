@@ -1,34 +1,48 @@
-#!/usr/bin/env python3
-
-import pathlib
-import threading
-import typer
-import time
 import http.server
+import pathlib
 import socketserver
+import threading
+import time
 
+import typer
 from nxtools import logging
+
 from app import TemplateBuilder
 
 logging.show_time = True
 app = typer.Typer(add_completion=False)
 
-dir_checks = {
-    "exists" : True,
-    "file_okay" : False,
-    "dir_okay" : True
-}
+dir_checks = {"exists": True, "file_okay": False, "dir_okay": True}
+
 
 @app.command()
 def build(
-        watch:bool=typer.Option(False, help="Watch the source directory and rebuild templates when source files are changed"),
-        serve:bool=typer.Option(False, help="Same as --watch, but additionally run a web server"),
-        dist:bool=typer.Option(False, help="Also generate zip files containing finished template(s)"),
-        template:str=typer.Option(None, help="When specified, build/watch only the selected template and ignore the rest"),
-        src_dir:pathlib.Path=typer.Option("./src", help="Path to the source root directory", **dir_checks),
-        build_dir:pathlib.Path=typer.Option("./build", help="Path to the output directory", **dir_checks),
-        dist_dir:pathlib.Path=typer.Option("./dist", help="Path to the directory where resulting zip files will be stored", **dir_checks)
-        ):
+    watch: bool = typer.Option(
+        False,
+        help="Watch the source directory and rebuild templates when source files are changed",
+    ),
+    serve: bool = typer.Option(
+        False, help="Same as --watch, but additionally run a web server"
+    ),
+    dist: bool = typer.Option(
+        False, help="Also generate zip files containing finished template(s)"
+    ),
+    template: str = typer.Option(
+        None,
+        help="When specified, build/watch only the selected template and ignore the rest",
+    ),
+    src_dir: pathlib.Path = typer.Option(
+        "./src", help="Path to the source root directory", **dir_checks
+    ),
+    build_dir: pathlib.Path = typer.Option(
+        "./build", help="Path to the output directory", **dir_checks
+    ),
+    dist_dir: pathlib.Path = typer.Option(
+        "./dist",
+        help="Path to the directory where resulting zip files will be stored",
+        **dir_checks,
+    ),
+):
     """
     HTML Template Builder 1.1.0
 
@@ -54,14 +68,12 @@ def build(
 
     builder.build(template, dist=dist)
     if watch or serve:
-
         # start builder.watch in a separate thread
-        thread = threading.Thread(target=builder.watch, kwargs={"dist" : dist})
+        thread = threading.Thread(target=builder.watch, kwargs={"dist": dist})
         thread.start()
 
-        
         if serve:
-            #TODO: much much smarter http handler. with index and stuff...
+            # TODO: much much smarter http handler. with index and stuff...
             class Handler(http.server.SimpleHTTPRequestHandler):
                 def __init__(self, *args, **kwargs):
                     super().__init__(*args, directory=str(build_dir), **kwargs)
@@ -84,11 +96,8 @@ def build(
                 except KeyboardInterrupt:
                     builder.watcher.stop()
                     break
-        
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     print()
     app()
-

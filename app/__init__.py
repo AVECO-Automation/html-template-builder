@@ -1,19 +1,19 @@
 """Template builder."""
 
-import os
-import time
 import json
-import zipfile
+import os
 import shutil
+import time
+import zipfile
 
-from nxtools import logging, log_traceback
+from nxtools import log_traceback, logging
 
-from .utils import process_sass, process_js, HTMLTemplate
 from .manifest import process_manifest
+from .utils import HTMLTemplate, process_js, process_sass
 from .watch import Watch
 
 
-class TemplateBuilder():
+class TemplateBuilder:
     """Template builder class."""
 
     def __init__(self, src_dir: str, build_dir: str, dist_dir: str) -> None:
@@ -30,7 +30,8 @@ class TemplateBuilder():
     def templates(self) -> list:
         """Return a list of templates available in the source directory."""
         return [
-            d for d in os.listdir(self.src_root)
+            d
+            for d in os.listdir(self.src_root)
             if os.path.isdir(os.path.join(self.src_root, d))
         ]
 
@@ -96,12 +97,12 @@ class TemplateBuilder():
         # Copy dependencies
         for depname in os.listdir(source_dir):
             if depname in [
-                    "template.html",
-                    "template.sass",
-                    "template.scss",
-                    "template.js",
-                    "manifest.json"
-                    ]:
+                "template.html",
+                "template.sass",
+                "template.scss",
+                "template.js",
+                "manifest.json",
+            ]:
                 continue
             dep_src = os.path.join(source_dir, depname)
             dep_tgt = os.path.join(target_dir, depname)
@@ -152,6 +153,7 @@ class TemplateBuilder():
 
     def watch(self, name: str = None, dist: bool = False) -> bool:
         """Watch the source directory for changes."""
+
         def handler(event):
             for path in event:
                 try:

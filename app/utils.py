@@ -1,13 +1,14 @@
 """HTML builder utilities."""
 
 import os
-import jinja2
+
 import htmlmin
+import jinja2
 import jsmin
 import sass
 
 
-class HTMLTemplate():
+class HTMLTemplate:
     """HTML template builder."""
 
     def __init__(self):
@@ -28,11 +29,11 @@ class HTMLTemplate():
         """Render the template with the context."""
         result = self.template.render(**self.ctx)
         return htmlmin.minify(
-                result,
-                remove_comments=True,
-                remove_empty_space=True,
-                remove_optional_attribute_quotes=False
-            )
+            result,
+            remove_comments=True,
+            remove_empty_space=True,
+            remove_optional_attribute_quotes=False,
+        )
 
 
 #
@@ -72,8 +73,8 @@ def process_sass(source_path: str) -> str:
     """
     with open(source_path) as sass_file:
         minified = sass.compile(
-                string=sass_file.read(),
-                indented=os.path.splitext(source_path)[1] == ".sass",
-                output_style="compressed"
-            )
+            string=sass_file.read(),
+            indented=os.path.splitext(source_path)[1] == ".sass",
+            output_style="compressed",
+        )
         return minified
